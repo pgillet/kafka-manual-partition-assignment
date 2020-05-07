@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poc-kafka-consumer-deployment
+  labels:
+    app: poc-kafka-consumer
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: poc-kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: poc-kafka-consumer
+    spec:
+      containers:
+        - name: poc-kafka-consumer
+          image: poc-kafka-consumer
+          ports:
+            - containerPort: 80
+          volumeMounts:
+          - mountPath: /logs
+            name: log-dir
+      volumes:
+      - name: log-dir
+        hostPath:
+          path: /logs
+          type: Directory

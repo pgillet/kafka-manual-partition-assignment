@@ -1,0 +1,23 @@
+# Start Zookeeper
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+# Start Kakfa brokers
+bin/kafka-server-start.sh config/server-0.properties
+bin/kafka-server-start.sh config/server-1.properties
+bin/kafka-server-start.sh config/server-2.properties
+
+# Create a topic
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic my-topic
+
+# Start Minikube
+minikube start
+
+# Mount log directory into minikube
+mkdir -p /tmp/pdgs-logs
+minikube mount /tmp/pdgs-logs:/logs
+
+# Reset offsets
+bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group my-group-id --reset-offsets --to-earliest --topic my-topic:0,1,2,3,4,5,6,7,8,9 --execute
+
+# Scale the number of consumers
+kubectl scale deployment/poc-kafka-consumer-deployment --replicas=<NB_CONSUMERS>

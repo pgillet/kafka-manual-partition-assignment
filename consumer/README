@@ -1,0 +1,18 @@
+# Prerequisites
+
+  The following tools are expected to be installed and setup on your system and available on the PATH of your machine:
+
+  - JetBrains IDE version 2018.2 or above to use Cloud Code for IntelliJ.
+
+  - kubectl for working with Kubernetes clusters and managing Kubernetes deployments.
+
+  - Skaffold to support continuous development on a Kubernetes cluster, smart image building and tagging, and an array
+    of supported deployment and build types.
+
+  - Configured Kubernetes cluster which can either be a cluster for local development, such as Minikube or Docker
+    Kubernetes cluster, or a remote cluster, such as Google Kubernetes Engine cluster. A Minikube cluster is recommended
+    for local development.
+  
+# Retrieve logs from all Kafka consumers
+
+  kubectl logs -lapp=poc-kafka-consumer --all-containers=true
